@@ -1,9 +1,0 @@
-[workspace]
-members = [
-    "exercises/ex01-state-machine",
-    "exercises/ex02-account-gatekeeper",
-    "exercises/ex03-privacy-boundaries",
-    "mini-project/confidential-route-sim",
-]
-resolver = "2"
-

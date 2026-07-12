@@ -1,9 +1,0 @@
-[workspace]
-members = [
-    "exercises/ex01-storage-trait",
-    "exercises/ex02-generic-command-apply",
-    "exercises/ex03-event-filter-iterator",
-    "exercises/ex04-state-machine-tests",
-    "mini-project/distributed-kv-core",
-]
-resolver = "2"

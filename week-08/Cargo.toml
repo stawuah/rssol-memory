@@ -1,9 +1,0 @@
-[workspace]
-members = [
-    "exercises/ex01-instruction-bytes",
-    "exercises/ex02-pda-derivation",
-    "exercises/ex03-account-validator",
-    "exercises/ex04-transaction-trace",
-    "mini-project/solana-native-hello-state",
-]
-resolver = "2"

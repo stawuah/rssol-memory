@@ -1,9 +1,0 @@
-[workspace]
-members = [
-    "exercises/ex01-worker-pool",
-    "exercises/ex02-channel-coordinator",
-    "exercises/ex03-timeout-simulation",
-    "exercises/ex04-backpressure-observer",
-    "mini-project/replica-coordinator",
-]
-resolver = "2"

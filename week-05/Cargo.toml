@@ -1,9 +1,0 @@
-[workspace]
-members = [
-    "exercises/ex01-borrowed-parser",
-    "exercises/ex02-shared-registry",
-    "exercises/ex03-interior-mutability",
-    "exercises/ex04-layout-awareness",
-    "mini-project/membership-registry",
-]
-resolver = "2"

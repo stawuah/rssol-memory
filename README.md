@@ -165,13 +165,6 @@ If you can implement the capstone without copying, explain every constraint, and
 defend each failure test, you have built a solid foundation for more advanced
 Solana protocol engineering.
 
-## Additional roadmap material
-
-The repository also contains weekly projects, distributed-systems notes, study
-workflows, retrospectives, mastery checkpoints, and interview preparation. These
-materials deepen the systems reasoning behind reliable blockchain software but
-are not required to begin the two core tracks.
-
 ## Safety
 
 Use localnet or devnet while learning. Never commit private keys or seed phrases,
