@@ -150,7 +150,10 @@ cargo test --workspace
 
 ## What this repository seeks to achieve
 
-By the end, a learner should be able to:
+This repository is designed to take a learner from "I can read Rust and copy an
+Anchor example" to "I can explain, test, and defend a Solana protocol design."
+
+By the end, the learner should be able to:
 
 - write idiomatic Rust without guessing about moves, borrows, or lifetimes;
 - model protocol state and legal transitions with structs and enums;
@@ -165,20 +168,21 @@ By the end, a learner should be able to:
 - identify instruction invariants and test hostile account substitution;
 - consider replay, duplicate accounts, compute ceilings, and privacy leakage.
 
-The expected outcome is readiness to build and test educational Solana programs
-such as counters, vaults, escrows, staking models, and simple marketplaces on
-localnet or devnet.
+The immediate outcome is readiness to build and test educational Solana
+programs such as counters, vaults, escrows, staking models, and simple
+marketplaces on localnet or devnet.
 
-After the full path, a learner should also be able to reason about protocol
-invariants, oracle trust, MEV exposure, upgrade tradeoffs, and operational
-readiness for production-grade Solana systems.
+The larger outcome is readiness to think like a protocol engineer: someone who
+can reason about invariants, oracle trust, MEV exposure, upgrade tradeoffs, and
+operational readiness for production-grade Solana systems.
 
 ## Proficiency this can develop
 
 Completing the exercises thoughtfully can move a learner from basic Rust syntax
-toward practical junior-level Solana program development. The learner should be
-able to read an Anchor account context, implement small state transitions, write
-meaningful tests, and discuss common account-validation risks.
+and framework familiarity toward practical junior-level Solana program
+development. The learner should be able to read an Anchor account context,
+implement small state transitions, write meaningful tests, and discuss common
+account-validation risks.
 
 Proficiency depends on how the repository is used. Typing solutions mechanically
 will provide limited value. Predicting behavior, explaining compiler errors,
