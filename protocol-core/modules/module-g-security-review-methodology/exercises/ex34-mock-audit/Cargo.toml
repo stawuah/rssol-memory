@@ -1,0 +1,6 @@
+[package]
+name = "ex34-mock-audit"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
