@@ -4,12 +4,15 @@ A hands-on learning repository for building the Rust knowledge, Solana mental
 models, and security habits needed to write reliable on-chain programs with
 Anchor.
 
-The repository teaches concepts in two connected stages:
+The repository teaches concepts in three connected stages:
 
 1. `rustlings-core` develops practical Rust fluency through small test-driven
    exercises.
 2. `anchor-core` translates those Rust concepts into Solana accounts, state
    transitions, validation, PDAs, CPIs, account sizing, errors, and compute.
+3. `protocol-core` builds on both to teach production protocol math, oracle
+   safety, MEV, CPI security, governance, deployment, fuzzing, zero-knowledge
+   proofs, and optimization for real Solana systems.
 
 The goal is not to memorize framework syntax. It is to understand what the code
 does, why the Solana runtime requires each check, and how a protocol remains
@@ -62,6 +65,27 @@ The exercises use small Rust models before introducing full framework machinery.
 This keeps the runtime behavior and security purpose of each Anchor constraint
 visible.
 
+### Protocol Core
+
+[`protocol-core`](./protocol-core/README.md) is the third track. It assumes the
+learner already understands Rust fundamentals and Anchor basics, then moves
+into the design problems that show up in real Solana protocols.
+
+Topics include:
+
+- fixed-point arithmetic, rounding, shares, fees, and liquidation math;
+- oracle safety, staleness, manipulation resistance, and circuit breakers;
+- MEV-aware ordering, commit-reveal, and encrypted trigger logic;
+- CPI security, signer propagation, and hostile account substitution;
+- upgrade authority, multisig governance, and timelocked changes;
+- deployment pipelines, logs, compute budgets, and mainnet runbooks;
+- security review, fuzzing, regression testing, and trust-boundary docs;
+- zero-knowledge proof intuition and Solana verification tradeoffs;
+- struct packing, zero-copy, batching, and rent-aware optimization.
+
+This is the track that helps a learner move from "I can write a program" to
+"I can reason about whether a protocol is safe enough to ship."
+
 ## How the two tracks connect
 
 | Rust skill | Solana and Anchor application |
@@ -75,6 +99,14 @@ visible.
 | Collections | Bounded account data and predictable compute |
 | Checked arithmetic | Safe balances, fees, shares, prices, and interest |
 | Tests | Proving authorization, boundaries, and invariants |
+
+## How the three tracks connect
+
+| Stage | What it teaches | Why it matters |
+|---|---|---|
+| `rustlings-core` | Rust syntax, ownership, errors, collections, and lifetimes | Gives you the language fluency to write correct code without fighting the compiler |
+| `anchor-core` | Accounts, PDAs, CPIs, validation, sizing, and compute | Turns Rust knowledge into safe Solana program structure |
+| `protocol-core` | Protocol math, security, governance, deployment, fuzzing, and optimization | Teaches you how to design and harden real production smart contracts |
 
 ## How to study
 
@@ -103,6 +135,13 @@ cd ../anchor-core
 cargo test -p ex01-account-as-state
 ```
 
+After Anchor Core, move into Protocol Core in order:
+
+```sh
+cd ../protocol-core
+cargo test -p ex01-fixed-point
+```
+
 Run an entire track only after its unfinished exercises have been completed:
 
 ```sh
@@ -129,6 +168,10 @@ By the end, a learner should be able to:
 The expected outcome is readiness to build and test educational Solana programs
 such as counters, vaults, escrows, staking models, and simple marketplaces on
 localnet or devnet.
+
+After the full path, a learner should also be able to reason about protocol
+invariants, oracle trust, MEV exposure, upgrade tradeoffs, and operational
+readiness for production-grade Solana systems.
 
 ## Proficiency this can develop
 
