@@ -1,32 +1,35 @@
 # Rust-to-Solana Memory
 
-A hands-on learning path from Rust fundamentals to production-grade Solana
-infrastructure and smart contract engineering. It starts with Rust syntax,
-moves through Anchor and Solana runtime reasoning, and ends with protocol
-design, economic modeling, oracle safety, MEV resistance, security review,
-fuzzing, and zero-knowledge systems.
+A hands-on learning path for building the Rust knowledge, Solana mental
+models, and security habits needed to design, build, and ship production-grade
+on-chain programs with Anchor — from first principles up through the
+economic, security, and operational judgment expected of a mid-to-senior
+protocol engineer.
 
-The repository teaches concepts in three connected stages:
+The repository teaches concepts across three connected stages:
 
 1. `rustlings-core` develops practical Rust fluency through small test-driven
    exercises.
 2. `anchor-core` translates those Rust concepts into Solana accounts, state
    transitions, validation, PDAs, CPIs, account sizing, errors, and compute.
-3. `protocol-core` builds on both to teach production protocol math, oracle
-   safety, MEV, CPI security, governance, deployment, fuzzing, zero-knowledge
-   proofs, and optimization for real Solana systems.
+3. `protocol-core` builds on Anchor Core to reach production readiness —
+   economic modeling, oracle integration, MEV resistance, cross-program
+   security, governance, deployment operations, security review methodology,
+   fuzz testing, zero-knowledge proofs, and optimization.
 
-The goal is not to memorize framework syntax. It is to understand what the code
-does, why the Solana runtime requires each check, and how a protocol remains
-correct when callers provide hostile inputs.
+The goal is not to memorize framework syntax. It is to understand what the
+code does, why the Solana runtime requires each check, why a protocol's
+economics can break even when its code compiles cleanly, and how a system
+remains correct — and solvent — when callers, markets, and oracles all behave
+adversarially.
 
 ## Learning tracks
 
 ### Rustlings Core
 
-[`rustlings-core`](./rustlings-core/README.md) contains focused Rust exercises
-with tests, a local README in every exercise folder, and numbered implementation
-guidance beside each `todo!()`.
+[`rustlings-core`](rustlings-core/README.md) contains focused Rust exercises
+with tests, a local README in every exercise folder, and numbered
+implementation guidance beside each `todo!()`.
 
 Topics include:
 
@@ -46,9 +49,9 @@ balance accounting.
 
 ### Anchor Core
 
-[`anchor-core`](./anchor-core/README.md) maps Rust reasoning to simplified
-Solana and Anchor models. Every exercise also includes its own README and coding
-steps in the source.
+[`anchor-core`](anchor-core/README.md) maps Rust reasoning to simplified
+Solana and Anchor models. Every exercise also includes its own README and
+coding steps in the source.
 
 Topics include:
 
@@ -63,55 +66,67 @@ Topics include:
 - protocol error codes and transaction failure;
 - compute budgets and worst-case execution.
 
-The exercises use small Rust models before introducing full framework machinery.
-This keeps the runtime behavior and security purpose of each Anchor constraint
-visible.
+The exercises use small Rust models before introducing full framework
+machinery. This keeps the runtime behavior and security purpose of each
+Anchor constraint visible.
 
 ### Protocol Core
 
-[`protocol-core`](./protocol-core/README.md) is the third track. It assumes the
-learner already understands Rust fundamentals and Anchor basics, then moves
-into the design problems that show up in real Solana protocols.
+[`protocol-core`](protocol-core/README.md) is where the curriculum moves from
+"writing correct Anchor code" to "reasoning like the engineer responsible for
+real money." Every exercise still follows the same `todo!()` + README + test
+pattern, but each module is anchored to a real exploit class or production
+failure mode, not just an API surface.
 
 Topics include:
 
-- fixed-point arithmetic, rounding, shares, fees, and liquidation math;
-- oracle safety, staleness, manipulation resistance, and circuit breakers;
-- MEV-aware ordering, commit-reveal, and encrypted trigger logic;
-- CPI security, signer propagation, and hostile account substitution;
-- upgrade authority, multisig governance, and timelocked changes;
-- deployment pipelines, logs, compute budgets, and mainnet runbooks;
-- security review, fuzzing, regression testing, and trust-boundary docs;
-- zero-knowledge proof intuition and Solana verification tradeoffs;
-- struct packing, zero-copy, batching, and rent-aware optimization.
-
-This is the track that helps a learner move from "I can write a program" to
-"I can reason about whether a protocol is safe enough to ship."
+- fixed-point economic modeling: rounding direction, share-based vault
+  accounting, fee accrual, slippage, interest curves, liquidation math, and
+  overcollateralized stablecoin mechanics;
+- oracle integration: confidence intervals, staleness defense, TWAP vs spot
+  pricing, and multi-oracle aggregation;
+- MEV and ordering: sandwich attacks, commit-reveal patterns, confidential
+  transfers, and encrypted trigger orders;
+- cross-program security: arbitrary CPI validation, multi-hop CPI privilege
+  tracking, and account-substitution exploits;
+- upgrade authority and governance: multisig gating, timelocks, and the
+  immutability/flexibility tradeoff;
+- deployment and operations: devnet/mainnet pipelines, IDL versioning,
+  transaction failure monitoring, and compute budget tuning;
+- security review methodology: reading real audit reports and conducting a
+  mock audit of an existing open-source program;
+- fuzz testing on-chain programs with Trident;
+- zero-knowledge proofs: prover/verifier intuition, ZK compression, on-chain
+  proof verification, and range proofs in confidential transfers;
+- optimization: account layout, zero-copy deserialization, compute unit
+  profiling, and instruction batching.
 
 ## How the three tracks connect
 
-| Stage or skill | What it teaches | Why it matters |
-|---|---|---|
-| `rustlings-core` | Rust syntax, ownership, errors, collections, and lifetimes | Gives you the language fluency to write correct code without fighting the compiler |
-| `anchor-core` | Accounts, PDAs, CPIs, validation, sizing, and compute | Turns Rust knowledge into safe Solana program structure |
-| `protocol-core` | Protocol math, security, governance, deployment, fuzzing, and optimization | Teaches you how to design and harden real production smart contracts |
-| Fixed-point math and rounding | Stablecoin solvency, fee accounting, and liquidation math | Prevents insolvency and hidden precision loss in financial programs |
-| Oracle reads and staleness checks | Price-manipulation defense and fail-closed execution | Keeps protocols from trusting stale or adversarial market data |
-| CPI validation and signer tracking | Cross-program exploit prevention | Stops fake-account substitution and privilege escalation across calls |
-| Governance and upgrade authority | Controlled upgrades and admin risk management | Makes protocol change management explicit instead of accidental |
-| Fuzzing and audits | Adversarial testing and bug documentation | Finds edge cases before they become production incidents |
-| Compute and account optimization | Staying inside network and rent limits | Keeps programs usable under real Solana constraints |
+| Rust / Anchor skill          | Junior application (Anchor Core)                    | Production application (Protocol Core)                  |
+| ----------------------------- | ---------------------------------------------------- | --------------------------------------------------------- |
+| Ownership and borrowing       | Safely reading and mutating account state            | Zero-copy account access under compute pressure            |
+| Structs                       | Serialized account and instruction data              | Fixed-point balance and share accounting                   |
+| Enums and `match`             | Protocol phases, commands, and legal transitions     | Liquidation states, order lifecycle, governance phases      |
+| `Result` and custom errors    | Failed instructions and client-readable errors       | Oracle-staleness and solvency-check failure paths           |
+| Slices and lifetimes          | Borrowed instruction bytes and account contexts      | Range-proof and ciphertext handling in confidential transfers |
+| Traits and generics           | Anchor account, serialization, and validation APIs   | Verifier interfaces for ZK proof programs                    |
+| Collections                   | Bounded account data and predictable compute         | Multi-oracle aggregation and keeper registries               |
+| Checked arithmetic            | Safe balances, fees, shares, prices, and interest    | Overflow-safe liquidation, funding rate, and peg mechanics    |
+| CPI                            | One constrained cross-program call                   | Multi-hop CPI graphs and arbitrary-CPI exploit defense        |
+| Tests                          | Proving authorization, boundaries, and invariants    | Fuzzing, adversarial testing, and mock security audits        |
 
 ## How to study
 
-Start with Rustlings Core and work in numeric order:
+Work through the tracks **in order** — Rustlings Core, then Anchor Core, then
+Protocol Core. Each track assumes the previous one is fully passing.
 
-```sh
+```
 cd rustlings-core
 cargo test -p ex01-let-mut
 ```
 
-For each exercise:
+For each exercise, in any track:
 
 1. Read the exercise folder's `README.md`.
 2. Read the function signatures and tests in `src/lib.rs`.
@@ -119,46 +134,52 @@ For each exercise:
 4. Follow the numbered coding map beside each `todo!()`.
 5. Implement one function at a time.
 6. Run only that package's tests until it passes.
-7. Add at least one boundary or adversarial test.
-8. Explain the Solana connection before continuing.
+7. Add at least one boundary or adversarial test of your own.
+8. Explain the Solana (or, in Protocol Core, the economic/security) connection
+   before continuing. If you can't explain *why* the check exists, re-read
+   the module README before moving on.
 
-After completing Rustlings Core, follow the same loop in Anchor Core:
+Move to Anchor Core only after Rustlings Core is fully passing:
 
-```sh
+```
 cd ../anchor-core
 cargo test -p ex01-account-as-state
 ```
 
-After Anchor Core is fully passing, move into Protocol Core in order:
+Move to Protocol Core only after Anchor Core is fully passing:
 
-```sh
-cd ../protocol-core
-cargo test -p ex01-fixed-point
 ```
-
-The same eight-step loop applies there too. The difference is that the exercises
-now focus on protocol logic, production risk, and adversarial behavior instead of
-basic Rust or framework mechanics.
+cd ../protocol-core
+cargo test -p ex01-fixed-point-basics
+```
 
 Run an entire track only after its unfinished exercises have been completed:
 
-```sh
+```
 cargo test --workspace
 ```
 
+## Appendix
+
+A full glossary of Rust, Solana, Anchor, DeFi, oracle, MEV, cryptography, and
+testing terminology used across all three tracks lives in
+[`GLOSSARY.md`](GLOSSARY.md). Each term is defined in plain language, followed
+by a one-line note on why it matters in this curriculum. Consult it whenever
+an exercise README uses a term you haven't seen defined yet — the exercises
+assume you'll look terms up rather than front-loading a glossary read before
+you start.
+
 ## What this repository seeks to achieve
 
-This repository is designed to take a learner from "I can read Rust and copy an
-Anchor example" to "I can explain, test, and defend a Solana protocol design."
-
-By the end, the learner should be able to:
+By the end of Rustlings Core and Anchor Core, a learner should be able to:
 
 - write idiomatic Rust without guessing about moves, borrows, or lifetimes;
 - model protocol state and legal transitions with structs and enums;
 - handle malformed input through precise errors instead of panics;
 - use bounded collections and predictable iteration;
 - implement overflow-safe integer and fixed-point arithmetic;
-- distinguish an account address, account owner, signer, and protocol authority;
+- distinguish an account address, account owner, signer, and protocol
+  authority;
 - explain why each Anchor account constraint exists;
 - derive and validate PDA-based state identities;
 - reason about privileges and failures across a CPI;
@@ -166,63 +187,55 @@ By the end, the learner should be able to:
 - identify instruction invariants and test hostile account substitution;
 - consider replay, duplicate accounts, compute ceilings, and privacy leakage.
 
-The immediate outcome is readiness to build and test educational Solana
-programs such as counters, vaults, escrows, staking models, and simple
-marketplaces on localnet or devnet.
+By the end of Protocol Core, a learner should additionally be able to:
 
-The larger outcome is practical mid-level Solana protocol engineering judgment:
-the learner should be able to reason about economic invariants, oracle trust,
-MEV exposure, cross-program trust boundaries, governance changes, and
-operational readiness for production-grade systems.
+- model share-based vault accounting and defend against donation attacks;
+- defend an oracle-dependent protocol against staleness and price
+  manipulation;
+- recognize and defend against sandwich attacks and other MEV, and explain
+  when confidential transfers or commit-reveal patterns are the right
+  mitigation;
+- trace signer privilege and validate account identity across multi-hop CPI;
+- design multisig- and timelock-gated governance for sensitive instructions;
+- run a real devnet deployment pipeline and monitor it in production;
+- read a professional security audit and conduct a credible mock audit of
+  someone else's program;
+- write and run a Trident fuzz suite against their own protocol, and turn a
+  discovered bug into a permanent regression test;
+- explain what a zero-knowledge proof does and does not prove, and reason
+  about when ZK is worth its cost versus a simpler mechanism;
+- profile and reduce an instruction's compute unit cost.
 
-## Proficiency this can develop
+Completing all three tracks thoughtfully can move a learner from basic Rust
+syntax through junior-level Anchor development into practical **mid-level
+Solana protocol engineering** — able to reason about economic invariants,
+oracle risk, MEV, and cross-program trust boundaries, and to run a fuzzing and
+mock-audit pass on their own code before anyone else sees it.
 
-Completing the exercises thoughtfully can move a learner from basic Rust syntax
-and framework familiarity toward junior-level Solana development and then into
-practical mid-level protocol engineering. The learner should be able to read an
-Anchor account context, implement small state transitions, write meaningful
-tests, run a fuzz pass, and explain the main trust boundaries in their own code.
+Reaching **senior-level, production-custody readiness** additionally requires
+real deployment history, incident response experience under live conditions,
+and independent third-party security review. This repository is designed to
+build the judgment those experiences require — it is not a substitute for
+having lived through them. Typing solutions mechanically will provide limited
+value at any level. Predicting behavior, explaining compiler and runtime
+errors, adding adversarial tests, and building a project from scratch will
+produce much stronger results than following the numbered hints alone.
 
-Proficiency depends on how the repository is used. Typing solutions mechanically
-will provide limited value. Predicting behavior, explaining compiler errors,
-adding adversarial tests, and building a project from scratch will produce much
-stronger results.
+## Suggested capstones
 
-This repository does not guarantee senior production readiness. Real seniority
-still depends on shipped systems, incident response, operational ownership, and
-independent third-party security review. What this repo does provide is the
-judgment-building foundation that makes those responsibilities realistic to
-approach.
+Protocol Core includes ten capstone specifications, ranging from an
+overcollateralized stablecoin to a fuzzed-and-audited "mystery vault." See
+[`protocol-core/CAPSTONES.md`](protocol-core/CAPSTONES.md) for the full list.
 
-## Suggested capstone
+Each capstone requires, at minimum:
 
-If you only do one project, start with the overcollateralized stablecoin
-protocol in `protocol-core/CAPSTONES.md`. It exercises the widest range of
-economic, oracle, and liquidation invariants.
+- deployment to devnet, not just localnet;
+- a written document listing every invariant and trust boundary;
+- a Trident fuzz suite run against the finished program;
+- tests for wrong signer, owner, PDA, program ID, mint, duplicate accounts,
+  overflow, invalid state, replay, CPI failure, and maximum-size inputs.
 
-If you want a broader challenge, build one of the other Protocol Core capstones
-that leans into MEV resistance, CPI security, governance, or fuzz testing. The
-full set of ten specs is the right place to choose from because each one is tied
-to a different production failure mode.
-
-Each capstone requires:
-
-- a devnet or localnet deployment plan;
-- a written invariant and trust-boundary document;
-- a fuzz or adversarial test strategy;
-- a short postmortem-style explanation of what it defends against.
-
-If you can implement one capstone without copying, explain every constraint,
-and defend the failure tests, you have built a strong foundation for more
-advanced Solana protocol engineering.
-
-## Appendix
-
-- [Root glossary](./GLOSSARY.md)
-- [Protocol Core glossary](./protocol-core/GLOSSARY.md)
-- [Protocol Core capstones](./protocol-core/CAPSTONES.md)
-
-## Safety
-
-Use localnet or devnet while learning. Never commit private keys or seed phrases,
-and never treat unaudited educational code as production financial software.
+If you can implement a capstone without copying, explain every constraint,
+defend each failure test, and describe what would need to happen before you'd
+trust it with real funds, you have built a solid foundation for
+production-oriented Solana protocol engineering.
