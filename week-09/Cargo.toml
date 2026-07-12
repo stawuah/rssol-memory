@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-anchor-counter",
+    "exercises/ex02-authority-constraints",
+    "exercises/ex03-versioned-update",
+    "exercises/ex04-bounded-account-data",
+    "mini-project/anchor-task-board",
+]
+resolver = "2"

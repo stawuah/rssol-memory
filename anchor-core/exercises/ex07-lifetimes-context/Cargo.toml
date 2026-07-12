@@ -1,0 +1,8 @@
+[package]
+name = "ex07-lifetimes-context"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+path = "src/lib.rs"
+

@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-moves-and-borrows",
+    "exercises/ex02-cluster-message-parser",
+    "exercises/ex03-node-role-model",
+    "exercises/ex04-state-transitions",
+    "mini-project/raft-lite-state-machine",
+]
+resolver = "2"

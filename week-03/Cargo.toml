@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-message-deduplicator",
+    "exercises/ex02-command-parser",
+    "exercises/ex03-replicated-log",
+    "exercises/ex04-error-classifier",
+    "mini-project/replicated-log-sim",
+]
+resolver = "2"

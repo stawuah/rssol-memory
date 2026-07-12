@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-temperature-converter",
+    "exercises/ex02-fibonacci",
+    "exercises/ex03-cli-calculator",
+    "exercises/ex04-retry-loop",
+    "mini-project/node-heartbeat-cli",
+]
+resolver = "2"

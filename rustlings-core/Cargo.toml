@@ -1,0 +1,20 @@
+[workspace]
+members = [
+    "exercises/ex01-let-mut",
+    "exercises/ex02-ownership",
+    "exercises/ex03-borrowing",
+    "exercises/ex04-struct-enum-match",
+    "exercises/ex05-result-and-question",
+    "exercises/ex06-slices",
+    "exercises/ex07-slices-advanced",
+    "exercises/ex08-structs",
+    "exercises/ex09-enums",
+    "exercises/ex10-errors",
+    "exercises/ex11-traits",
+    "exercises/ex12-generics",
+    "exercises/ex13-collections",
+    "exercises/ex14-iterators",
+    "exercises/ex15-lifetimes",
+    "exercises/ex16-checked-arithmetic",
+]
+resolver = "2"

@@ -1,0 +1,14 @@
+[workspace]
+members = [
+    "exercises/ex01-account-as-state",
+    "exercises/ex02-program-vs-account",
+    "exercises/ex03-pda-determinism",
+    "exercises/ex04-cpi-router",
+    "exercises/ex05-anchor-checks",
+    "exercises/ex06-confidential-flow",
+    "exercises/ex07-lifetimes-context",
+    "exercises/ex08-account-space",
+    "exercises/ex09-error-codes",
+    "exercises/ex10-compute-budget",
+]
+resolver = "2"

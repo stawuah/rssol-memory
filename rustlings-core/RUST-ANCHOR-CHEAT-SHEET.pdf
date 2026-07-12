@@ -1,0 +1,1217 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R] /Count 7 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 3489 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F2 10 Tf
+(Rust + Anchor Core Cheat Sheet) Tj
+T*
+/F2 10 Tf
+(A practical bridge from beginner Rust to Solana programs) Tj
+T*
+/F2 10 Tf
+(Keep this beside rustlings-core and anchor-core) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(This guide explains the concepts you will repeatedly meet while writing Anchor) Tj
+T*
+/F1 9 Tf
+(programs. Read it as a map, not something to memorize. The central idea is that) Tj
+T*
+/F1 9 Tf
+(a Solana program is a deterministic Rust state machine operating on accounts) Tj
+T*
+/F1 9 Tf
+(supplied by a caller. Correctness comes from validating those accounts before) Tj
+T*
+/F1 9 Tf
+(changing state.) Tj
+T*
+/F2 10 Tf
+(The five questions to ask for every instruction) Tj
+T*
+/F2 10 Tf
+(  1.) Tj
+T*
+/F1 9 Tf
+(What state may change?) Tj
+T*
+/F2 10 Tf
+(  2.) Tj
+T*
+/F1 9 Tf
+(Who is authorized to request the change?) Tj
+T*
+/F2 10 Tf
+(  3.) Tj
+T*
+/F1 9 Tf
+(Does every account have the expected address, owner, type, and permissions?) Tj
+T*
+/F2 10 Tf
+(  4.) Tj
+T*
+/F1 9 Tf
+(Which invariant must remain true after the change?) Tj
+T*
+/F2 10 Tf
+(  5.) Tj
+T*
+/F1 9 Tf
+(Can arithmetic, allocation, a CPI, or compute usage fail?) Tj
+T*
+/F2 10 Tf
+(Rust values, variables, and mutability) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+("let" binds a name to a value. Values are immutable unless the binding uses) Tj
+T*
+/F1 9 Tf
+("mut". Immutability makes state changes visible and easier to audit.) Tj
+T*
+/F1 9 Tf
+(    let balance = 10_u64;) Tj
+T*
+/F1 9 Tf
+(    let mut counter = 0_u64;) Tj
+T*
+/F1 9 Tf
+(    counter += 1;) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Anchor mapping: an account must be marked mutable before its data or lamports) Tj
+T*
+/F1 9 Tf
+(can change. Rust "mut" controls a local binding; Anchor's "mut" account) Tj
+T*
+/F1 9 Tf
+(constraint tells the runtime and transaction that the account will be written.) Tj
+T*
+/F1 9 Tf
+(They are related ideas but are not interchangeable.) Tj
+T*
+/F2 10 Tf
+(Scalar types and arithmetic) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Use explicit integer types for stored protocol state. Unsigned integers \(u8,) Tj
+T*
+/F1 9 Tf
+(u16, u32, u64, u128\) cannot represent negative values. Their size controls both) Tj
+T*
+/F1 9 Tf
+(range and account space. Never rely on release-mode wrapping for financial math.) Tj
+T*
+/F1 9 Tf
+(    let next = balance.checked_add\(deposit\)) Tj
+T*
+/F1 9 Tf
+(        .ok_or\(ProtocolError::Overflow\)?;) Tj
+T*
+/F1 9 Tf
+(    let remaining = balance.checked_sub\(withdrawal\)) Tj
+T*
+/F1 9 Tf
+(        .ok_or\(ProtocolError::InsufficientFunds\)?;) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(For ratios and prices, define a fixed-point scale and rounding direction. Avoid) Tj
+T*
+/F1 9 Tf
+(floating point in protocol state. Rounding is economic policy, not a cosmetic) Tj
+T*
+/F1 9 Tf
+(implementation detail.) Tj
+T*
+/F2 10 Tf
+(Ownership: who must clean up a value?) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Every Rust value has one owner. Moving a non-Copy value transfers ownership.) Tj
+T*
+/F1 9 Tf
+(When the owner leaves scope, Rust drops the value. Small scalar types such as) Tj
+T*
+/F1 9 Tf
+(u64 usually implement Copy, so assignment copies their bits.) Tj
+T*
+/F1 9 Tf
+(    let name = String::from\("vault"\);) Tj
+T*
+/F1 9 Tf
+(    let moved = name;             // name can no longer be used) Tj
+T*
+/F1 9 Tf
+(    let amount = 10_u64;) Tj
+T*
+/F1 9 Tf
+(    let copied = amount;          // both remain usable) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 1 of 7) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 3559 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F1 9 Tf
+(Rust ownership is different from Solana account ownership. Rust ownership is a) Tj
+T*
+/F1 9 Tf
+(compile-time memory rule. A Solana account's owner field names the program) Tj
+T*
+/F1 9 Tf
+(allowed to modify its data. Always check both concepts in their proper layer.) Tj
+T*
+/F2 10 Tf
+(Borrowing and references) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+("&T" is a shared, read-only borrow. "&mut T" is an exclusive mutable borrow.) Tj
+T*
+/F1 9 Tf
+(Rust permits many readers or one writer at a time. A borrow does not take) Tj
+T*
+/F1 9 Tf
+(ownership and normally avoids a copy.) Tj
+T*
+/F1 9 Tf
+(    fn balance\(vault: &Vault\) -> u64 { vault.balance }) Tj
+T*
+/F1 9 Tf
+(    fn freeze\(vault: &mut Vault\) { vault.frozen = true; }) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Anchor's Context contains references to validated accounts. Instruction) Tj
+T*
+/F1 9 Tf
+(handlers usually borrow account data, update it, then return. Exclusive borrows) Tj
+T*
+/F1 9 Tf
+(help prevent two pieces of Rust code from mutating the same value at once, but) Tj
+T*
+/F1 9 Tf
+(they do not replace on-chain account validation.) Tj
+T*
+/F2 10 Tf
+(Strings and slices) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(String owns growable UTF-8 bytes. &str borrows UTF-8 text. [T] is a sequence of) Tj
+T*
+/F1 9 Tf
+(items, and &[T] borrows such a sequence. Slices are views, so they avoid new) Tj
+T*
+/F1 9 Tf
+(allocations.) Tj
+T*
+/F1 9 Tf
+(    fn prefix\(text: &str, delimiter: char\) -> &str {) Tj
+T*
+/F1 9 Tf
+(        &text[..text.find\(delimiter\).unwrap_or\(text.len\(\)\)]) Tj
+T*
+/F1 9 Tf
+(    }) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(String indexing uses byte offsets and may panic if an offset splits a UTF-8) Tj
+T*
+/F1 9 Tf
+(character. For protocol inputs, limit maximum lengths before doing expensive) Tj
+T*
+/F1 9 Tf
+(work. Anchor/Borsh stores a String as a 4-byte length followed by UTF-8 bytes;) Tj
+T*
+/F1 9 Tf
+(allocate for the maximum encoded length, not today's value.) Tj
+T*
+/F2 10 Tf
+(Structs, impl blocks, and state) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A struct groups fields into one type. An impl block defines associated functions) Tj
+T*
+/F1 9 Tf
+(and methods. A method with &mut self changes the value.) Tj
+T*
+/F1 9 Tf
+(    struct Vault { authority: Pubkey, balance: u64, frozen: bool }) Tj
+T*
+/F1 9 Tf
+(    impl Vault {) Tj
+T*
+/F1 9 Tf
+(        fn can_withdraw\(&self, signer: Pubkey\) -> bool {) Tj
+T*
+/F1 9 Tf
+(            !self.frozen && self.authority == signer) Tj
+T*
+/F1 9 Tf
+(        }) Tj
+T*
+/F1 9 Tf
+(    }) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Anchor mapping: a struct marked as an account describes serialized on-chain) Tj
+T*
+/F1 9 Tf
+(state. Keep stored state minimal, version it deliberately, and document each) Tj
+T*
+/F1 9 Tf
+(field's invariant.) Tj
+T*
+/F2 10 Tf
+(Enums and exhaustive match) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(An enum represents one of several valid alternatives. Variants may carry data.) Tj
+T*
+/F1 9 Tf
+("match" forces all cases to be handled, which is ideal for state machines.) Tj
+T*
+/F1 9 Tf
+(    enum Command { Deposit\(u64\), Withdraw\(u64\), Freeze }) Tj
+T*
+/F1 9 Tf
+(    match command {) Tj
+T*
+/F1 9 Tf
+(        Command::Deposit\(n\) => deposit\(n\),) Tj
+T*
+/F1 9 Tf
+(        Command::Withdraw\(n\) => withdraw\(n\),) Tj
+T*
+/F1 9 Tf
+(        Command::Freeze => freeze\(\),) Tj
+T*
+/F1 9 Tf
+(    }) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Protocol states should make invalid transitions explicit. A frozen vault should) Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 2 of 7) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 3561 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F1 9 Tf
+(not silently behave like an active vault. Prefer a clear enum or explicit flag) Tj
+T*
+/F1 9 Tf
+(plus validation over magic numbers.) Tj
+T*
+/F2 10 Tf
+(Option, Result, and the question-mark operator) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Option<T> means a value may be present or absent. Result<T, E> means an operation) Tj
+T*
+/F1 9 Tf
+(either succeeds with T or fails with E. The ? operator returns an error early) Tj
+T*
+/F1 9 Tf
+(while preserving the success value.) Tj
+T*
+/F1 9 Tf
+(    fn debit\(balance: u64, amount: u64\) -> Result<u64, Error> {) Tj
+T*
+/F1 9 Tf
+(        balance.checked_sub\(amount\).ok_or\(Error::InsufficientFunds\)) Tj
+T*
+/F1 9 Tf
+(    }) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Do not use unwrap or expect on untrusted instruction or account data. A panic) Tj
+T*
+/F1 9 Tf
+(produces a poor failure boundary. Return a specific program error that clients) Tj
+T*
+/F1 9 Tf
+(and tests can understand.) Tj
+T*
+/F2 10 Tf
+(Traits and generics) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A trait defines behavior that multiple types can implement. A generic function) Tj
+T*
+/F1 9 Tf
+(works with types satisfying stated trait bounds.) Tj
+T*
+/F1 9 Tf
+(    trait Validate { fn validate\(&self\) -> Result<\(\), Error>; }) Tj
+T*
+/F1 9 Tf
+(    fn checked<T: Validate>\(value: &T\) -> Result<\(\), Error> {) Tj
+T*
+/F1 9 Tf
+(        value.validate\(\)) Tj
+T*
+/F1 9 Tf
+(    }) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Anchor uses traits heavily for serialization, deserialization, account loading,) Tj
+T*
+/F1 9 Tf
+(and instruction construction. You need to read trait bounds confidently; you do) Tj
+T*
+/F1 9 Tf
+(not need advanced trait wizardry to begin writing programs.) Tj
+T*
+/F2 10 Tf
+(Collections and bounded work) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Vec<T> is a growable sequence. Arrays [T; N] have a compile-time length.) Tj
+T*
+/F1 9 Tf
+(HashMap is useful off-chain but deterministic ordered representations are often) Tj
+T*
+/F1 9 Tf
+(easier to reason about in protocol logic. Every on-chain collection needs an) Tj
+T*
+/F1 9 Tf
+(explicit maximum size or a separate account-growth strategy.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Unbounded input creates three risks: insufficient account space, excessive) Tj
+T*
+/F1 9 Tf
+(compute, and denial of service. Validate length before loops, allocation, hashing,) Tj
+T*
+/F1 9 Tf
+(or CPIs.) Tj
+T*
+/F2 10 Tf
+(Iterators and closures) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Iterators process sequences through methods such as map, filter, find, any, and) Tj
+T*
+/F1 9 Tf
+(fold. They are usually zero-cost abstractions, but collect allocates a new) Tj
+T*
+/F1 9 Tf
+(collection.) Tj
+T*
+/F1 9 Tf
+(    let total = positions.iter\(\)) Tj
+T*
+/F1 9 Tf
+(        .try_fold\(0_u64, |sum, p| sum.checked_add\(p.amount\)\)) Tj
+T*
+/F1 9 Tf
+(        .ok_or\(Error::Overflow\)?;) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(On-chain, a concise iterator is not automatically cheaper than a loop. Measure) Tj
+T*
+/F1 9 Tf
+(compute units for hot paths and avoid repeated scans when state can maintain a) Tj
+T*
+/F1 9 Tf
+(safe aggregate.) Tj
+T*
+/F2 10 Tf
+(Lifetimes) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A lifetime describes how long a reference remains valid. It does not extend the) Tj
+T*
+/F1 9 Tf
+(life of data; it records a relationship the compiler must enforce.) Tj
+T*
+/F1 9 Tf
+(    fn choose<'a>\(left: &'a str, right: &'a str, first: bool\) -> &'a str {) Tj
+T*
+/F1 9 Tf
+(        if first { left } else { right }) Tj
+T*
+/F1 9 Tf
+(    }) Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 3 of 7) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 3876 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(In Anchor, 'info connects account references inside Context and account wrapper) Tj
+T*
+/F1 9 Tf
+(types. Read it as "these references are valid for the instruction's account) Tj
+T*
+/F1 9 Tf
+(context." Start by following compiler guidance; explicit lifetime complexity is) Tj
+T*
+/F1 9 Tf
+(usually needed only in helpers involving several account references.) Tj
+T*
+/F2 10 Tf
+(Modules, visibility, and crates) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A crate is a compilation unit. Modules organize code. Items are private unless) Tj
+T*
+/F1 9 Tf
+(made pub. Keep instruction handlers small and place pure state-transition logic) Tj
+T*
+/F1 9 Tf
+(in testable modules. Expose only the API other modules truly need.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Common program layout: instructions, state, errors, constants, events, and) Tj
+T*
+/F1 9 Tf
+(utility validation. Structure is useful only when it makes security boundaries) Tj
+T*
+/F1 9 Tf
+(easier to see.) Tj
+T*
+/F2 10 Tf
+(Solana account mental model) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(An account has an address, lamports, an owner program, executable status, and a) Tj
+T*
+/F1 9 Tf
+(byte array. Programs are stateless code; persistent application state lives in) Tj
+T*
+/F1 9 Tf
+(accounts. A transaction names all accounts an instruction may read or write.) Tj
+T*
+/F2 10 Tf
+(  Address) Tj
+T*
+/F1 9 Tf
+(Identity of the account. Validate expected fixed addresses or derivations.) Tj
+T*
+/F2 10 Tf
+(  Owner) Tj
+T*
+/F1 9 Tf
+(Program allowed to modify account data. This is not the user authority.) Tj
+T*
+/F2 10 Tf
+(  Authority) Tj
+T*
+/F1 9 Tf
+(A protocol-defined key allowed to perform an action, often required to sign.) Tj
+T*
+/F2 10 Tf
+(  Signer) Tj
+T*
+/F1 9 Tf
+(Evidence that the transaction was authorized by a private key.) Tj
+T*
+/F2 10 Tf
+(  Writable) Tj
+T*
+/F1 9 Tf
+(Permission declared by the transaction for state mutation.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(These properties answer different questions. Checking only one is rarely enough.) Tj
+T*
+/F2 10 Tf
+(Anchor Context and constraints) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Context groups the accounts for an instruction. The Accounts-derived struct and) Tj
+T*
+/F1 9 Tf
+(its constraints form the first validation wall. Useful constraints include) Tj
+T*
+/F1 9 Tf
+(signer, mut, owner, address, has_one, seeds, bump, constraint, init, close, and) Tj
+T*
+/F1 9 Tf
+(token-specific checks.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Constraints reduce boilerplate but do not invent your business invariants. You) Tj
+T*
+/F1 9 Tf
+(must still validate amounts, state transitions, timing, limits, relationships,) Tj
+T*
+/F1 9 Tf
+(and any assumptions about accounts used by a CPI.) Tj
+T*
+/F2 10 Tf
+(PDAs) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A Program Derived Address is deterministically calculated from seeds, a program) Tj
+T*
+/F1 9 Tf
+(ID, and a bump. It has no private key. The deriving program can sign for it) Tj
+T*
+/F1 9 Tf
+(during a CPI by supplying the correct seeds.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Good seeds create one clear namespace and bind state to the correct domain, for) Tj
+T*
+/F1 9 Tf
+(example ["position", market, user]. Validate seeds and bump on every instruction) Tj
+T*
+/F1 9 Tf
+(that trusts the PDA. Seed design is part of the protocol's authorization model.) Tj
+T*
+/F1 9 Tf
+(Never treat knowing a PDA address as proof of user authorization.) Tj
+T*
+/F2 10 Tf
+(Cross-program invocations) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A CPI asks another program to execute an instruction. Treat the target program) Tj
+T*
+/F1 9 Tf
+(and every forwarded account as a trust boundary. Verify the program ID, provide) Tj
+T*
+/F1 9 Tf
+(only required signer privileges, validate accounts before and after when needed,) Tj
+T*
+/F1 9 Tf
+(and understand which state the callee may change.) Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 4 of 7) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 3724 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(A transaction is atomic: if a CPI fails and the error is propagated, the entire) Tj
+T*
+/F1 9 Tf
+(transaction rolls back. Atomicity does not make a logically incorrect CPI safe.) Tj
+T*
+/F2 10 Tf
+(Serialization and account space) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Anchor account data normally starts with an 8-byte discriminator. Fixed-size) Tj
+T*
+/F1 9 Tf
+(integers occupy their byte width. A bool is 1 byte. Pubkey is 32 bytes. String) Tj
+T*
+/F1 9 Tf
+(and Vec include a 4-byte length prefix plus maximum contents. Option adds a tag) Tj
+T*
+/F1 9 Tf
+(plus its possible value. Enums require a variant tag plus enough room for their) Tj
+T*
+/F1 9 Tf
+(largest variant.) Tj
+T*
+/F1 9 Tf
+(    space = 8                    // discriminator) Tj
+T*
+/F1 9 Tf
+(          + 32                   // authority Pubkey) Tj
+T*
+/F1 9 Tf
+(          + 8                    // balance u64) Tj
+T*
+/F1 9 Tf
+(          + 1                    // frozen bool) Tj
+T*
+/F1 9 Tf
+(          + 4 + MAX_NAME_BYTES;  // String) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Do not calculate dynamic space from only the initial input if future updates may) Tj
+T*
+/F1 9 Tf
+(grow the value. Reallocation and rent funding need explicit design.) Tj
+T*
+/F2 10 Tf
+(Transactions, instructions, and atomicity) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(An instruction contains a program ID, an account metadata list, and instruction) Tj
+T*
+/F1 9 Tf
+(data. A transaction contains one or more instructions plus signatures and a) Tj
+T*
+/F1 9 Tf
+(recent blockhash. All instructions succeed or the transaction fails atomically.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Transactions can be retried by clients. Design actions to reject duplicate or) Tj
+T*
+/F1 9 Tf
+(stale operations when repetition would be harmful. Use sequence numbers,) Tj
+T*
+/F1 9 Tf
+(receipts, unique PDAs, or explicit state transitions where appropriate.) Tj
+T*
+/F2 10 Tf
+(Compute units and performance) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Solana execution is metered. Expensive patterns include unbounded loops, repeated) Tj
+T*
+/F1 9 Tf
+(serialization, large allocations, excessive logging, repeated PDA derivation,) Tj
+T*
+/F1 9 Tf
+(and unnecessary CPIs. Optimize after correctness, then measure.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Fast Rust habits that also improve clarity: borrow instead of clone, return) Tj
+T*
+/F1 9 Tf
+(slices where possible, validate cheap conditions before expensive work, avoid) Tj
+T*
+/F1 9 Tf
+(collect when streaming is enough, and store safe aggregates rather than rescanning) Tj
+T*
+/F1 9 Tf
+(large collections.) Tj
+T*
+/F2 10 Tf
+(Testing strategy) Tj
+T*
+/F2 10 Tf
+(  1.) Tj
+T*
+/F1 9 Tf
+(Test the happy path and exact state changes.) Tj
+T*
+/F2 10 Tf
+(  2.) Tj
+T*
+/F1 9 Tf
+(Test each authorization failure: wrong signer, missing signer, wrong authority.) Tj
+T*
+/F2 10 Tf
+(  3.) Tj
+T*
+/F1 9 Tf
+(Test account substitution: wrong owner, wrong PDA seeds, wrong program ID.) Tj
+T*
+/F2 10 Tf
+(  4.) Tj
+T*
+/F1 9 Tf
+(Test boundaries: zero, one, maximum, maximum plus one, overflow, underflow.) Tj
+T*
+/F2 10 Tf
+(  5.) Tj
+T*
+/F1 9 Tf
+(Test invalid state transitions and repeat the same instruction.) Tj
+T*
+/F2 10 Tf
+(  6.) Tj
+T*
+/F1 9 Tf
+(Test CPI failure and confirm state remains consistent.) Tj
+T*
+/F2 10 Tf
+(  7.) Tj
+T*
+/F1 9 Tf
+(Measure compute on realistic maximum-size inputs.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(Prefer pure Rust unit tests for state math and validation. Add program-level tests) Tj
+T*
+/F1 9 Tf
+(for account constraints, serialization, PDAs, CPIs, and transaction behavior.) Tj
+T*
+/F2 10 Tf
+(Security checklist before every state change) Tj
+T*
+/F2 10 Tf
+(  Authorization) Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 5 of 7) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 14 0 R >>
+endobj
+14 0 obj
+<< /Length 3238 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F1 9 Tf
+(Did the correct authority sign, and is that authority stored or derived correctly?) Tj
+T*
+/F2 10 Tf
+(  Identity) Tj
+T*
+/F1 9 Tf
+(Are fixed addresses, PDA seeds, bump, and account relationships verified?) Tj
+T*
+/F2 10 Tf
+(  Ownership) Tj
+T*
+/F1 9 Tf
+(Is each data account owned by the expected program?) Tj
+T*
+/F2 10 Tf
+(  Type) Tj
+T*
+/F1 9 Tf
+(Is data length and discriminator correct before deserialization?) Tj
+T*
+/F2 10 Tf
+(  Mutability) Tj
+T*
+/F1 9 Tf
+(Are only intended accounts writable, and can aliases/duplicates cause trouble?) Tj
+T*
+/F2 10 Tf
+(  Arithmetic) Tj
+T*
+/F1 9 Tf
+(Are checked operations, units, precision, and rounding direction explicit?) Tj
+T*
+/F2 10 Tf
+(  State) Tj
+T*
+/F1 9 Tf
+(Is this transition legal from the current state, including repeated calls?) Tj
+T*
+/F2 10 Tf
+(  CPI) Tj
+T*
+/F1 9 Tf
+(Is the target program trusted and are forwarded privileges minimal?) Tj
+T*
+/F2 10 Tf
+(  Resources) Tj
+T*
+/F1 9 Tf
+(Are input length, account growth, compute, and fees bounded?) Tj
+T*
+/F2 10 Tf
+(  Closing) Tj
+T*
+/F1 9 Tf
+(Does closing send lamports to the intended recipient and prevent account revival?) Tj
+T*
+/F2 10 Tf
+(Common confusions) Tj
+T*
+/F2 10 Tf
+(  Rust) Tj
+T*
+/F1 9 Tf
+(The variable responsible for a value's memory.) Tj
+T*
+/F2 10 Tf
+(  Account) Tj
+T*
+/F1 9 Tf
+(The program ID allowed to modify an account's data.) Tj
+T*
+/F2 10 Tf
+(  Authority) Tj
+T*
+/F1 9 Tf
+(A key your protocol recognizes as permitted to perform an action.) Tj
+T*
+/F2 10 Tf
+(  Signer) Tj
+T*
+/F1 9 Tf
+(A transaction participant that proved control of a private key.) Tj
+T*
+/F2 10 Tf
+(  mut) Tj
+T*
+/F1 9 Tf
+(Allows mutation through a binding or reference.) Tj
+T*
+/F2 10 Tf
+(  mut) Tj
+T*
+/F1 9 Tf
+(Declares an account writable for the transaction.) Tj
+T*
+/F2 10 Tf
+(  PDA) Tj
+T*
+/F1 9 Tf
+(A program signs through runtime-verified seeds during a CPI; no secret key exists.) Tj
+T*
+/F2 10 Tf
+(Recommended Rustlings Core expansion) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(The existing six exercises cover mutability, ownership, borrowing, state models,) Tj
+T*
+/F1 9 Tf
+(Result, and slices. Add these exercises next:) Tj
+T*
+/F2 10 Tf
+(  ex07) Tj
+T*
+/F1 9 Tf
+(Collections: Vec, arrays, maps, maximum lengths, and avoiding needless clones.) Tj
+T*
+/F2 10 Tf
+(  ex08) Tj
+T*
+/F1 9 Tf
+(Traits and generics: reusable validation with simple trait bounds.) Tj
+T*
+/F2 10 Tf
+(  ex09) Tj
+T*
+/F1 9 Tf
+(Iterators: find, any, try_fold, and allocation awareness.) Tj
+T*
+/F2 10 Tf
+(  ex10) Tj
+T*
+/F1 9 Tf
+(Lifetimes: returned borrows and Anchor-style Context relationships.) Tj
+T*
+/F2 10 Tf
+(  ex11) Tj
+T*
+/F1 9 Tf
+(Checked arithmetic: overflow, underflow, fixed-point scale, and rounding.) Tj
+T*
+/F2 10 Tf
+(  ex12) Tj
+T*
+/F1 9 Tf
+(Serialization and space: manual byte layout and maximum account size.) Tj
+T*
+/F2 10 Tf
+(  ex13) Tj
+T*
+/F1 9 Tf
+(Modules and tests: library boundaries, unit tests, and adversarial cases.) Tj
+T*
+/F2 10 Tf
+(  ex14) Tj
+T*
+/F1 9 Tf
+(Security invariants: signer, authority, owner, PDA, duplicates, and legal transitions.) Tj
+T*
+/F2 10 Tf
+(Learning loop) Tj
+T*
+/F2 10 Tf
+(  1.) Tj
+T*
+/F1 9 Tf
+(Read the test before the implementation.) Tj
+T*
+/F2 10 Tf
+(  2.) Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 6 of 7) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 17 0 R /F2 18 0 R >> >> /Contents 16 0 R >>
+endobj
+16 0 obj
+<< /Length 914 >>
+stream
+BT
+/F1 9 Tf
+12 TL
+48 800 Td
+/F1 9 Tf
+(Predict ownership, state, and expected error on paper.) Tj
+T*
+/F2 10 Tf
+(  3.) Tj
+T*
+/F1 9 Tf
+(Write the smallest correct implementation.) Tj
+T*
+/F2 10 Tf
+(  4.) Tj
+T*
+/F1 9 Tf
+(Explain why each validation exists and what attack it blocks.) Tj
+T*
+/F2 10 Tf
+(  5.) Tj
+T*
+/F1 9 Tf
+(Add one failure test the exercise did not provide.) Tj
+T*
+/F2 10 Tf
+(  6.) Tj
+T*
+/F1 9 Tf
+(Translate the Rust idea into its Anchor/account equivalent.) Tj
+T*
+/F1 9 Tf
+() Tj
+T*
+/F1 9 Tf
+(You are ready to build educational protocols when you can implement a vault or) Tj
+T*
+/F1 9 Tf
+(escrow locally, explain every account constraint, test all failure paths, and) Tj
+T*
+/F1 9 Tf
+(state the protocol invariants in plain language. Real funds require substantially) Tj
+T*
+/F1 9 Tf
+(more review, adversarial testing, and independent security assessment.) Tj
+ET
+BT /F1 8 Tf 270 24 Td (Page 7 of 7) Tj ET
+endstream
+endobj
+17 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+18 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 19
+0000000000 65535 f 
+0000000019 00000 n 
+0000000068 00000 n 
+0000000164 00000 n 
+0000000302 00000 n 
+0000003842 00000 n 
+0000003980 00000 n 
+0000007590 00000 n 
+0000007728 00000 n 
+0000011340 00000 n 
+0000011479 00000 n 
+0000015407 00000 n 
+0000015547 00000 n 
+0000019323 00000 n 
+0000019463 00000 n 
+0000022753 00000 n 
+0000022893 00000 n 
+0000023858 00000 n 
+0000023929 00000 n 
+trailer
+<< /Size 19 /Root 1 0 R >>
+startxref
+24005
+%%EOF

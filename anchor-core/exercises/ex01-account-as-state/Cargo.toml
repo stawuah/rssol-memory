@@ -1,0 +1,8 @@
+[package]
+name = "ex01-account-as-state"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+path = "src/lib.rs"
+

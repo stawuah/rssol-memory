@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-cli-client",
+    "exercises/ex02-event-consumer",
+    "exercises/ex03-lagging-indexer",
+    "exercises/ex04-cache-recovery",
+    "mini-project/protocol-stack",
+]
+resolver = "2"

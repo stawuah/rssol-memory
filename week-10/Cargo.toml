@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-cpi-call-path",
+    "exercises/ex02-owner-signer-checks",
+    "exercises/ex03-vulnerability-patch",
+    "exercises/ex04-negative-tests",
+    "mini-project/vault-program",
+]
+resolver = "2"

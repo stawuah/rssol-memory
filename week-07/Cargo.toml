@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "exercises/ex01-serialize-node-state",
+    "exercises/ex02-binary-message-format",
+    "exercises/ex03-append-only-log",
+    "exercises/ex04-recovery-replay",
+    "mini-project/durable-event-log",
+]
+resolver = "2"
