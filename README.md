@@ -10,6 +10,10 @@ The repository teaches concepts in two connected stages:
    exercises.
 2. `anchor-core` translates those Rust concepts into Solana accounts, state
    transitions, validation, PDAs, CPIs, account sizing, errors, and compute.
+3. `protocol-core` applies those foundations to production financial math,
+   oracle safety, MEV, CPI security, governance, operations, fuzzing, ZK, and
+   optimization. It is being built module by module so each section can be
+   reviewed before the next is added.
 
 The goal is not to memorize framework syntax. It is to understand what the code
 does, why the Solana runtime requires each check, and how a protocol remains

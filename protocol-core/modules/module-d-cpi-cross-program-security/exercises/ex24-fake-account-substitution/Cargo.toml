@@ -1,0 +1,6 @@
+[package]
+name = "ex24-fake-account-substitution"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
