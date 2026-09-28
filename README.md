@@ -6,7 +6,7 @@ on-chain programs with Anchor — from first principles up through the
 economic, security, and operational judgment expected of a mid-to-senior
 protocol engineer.
 
-The repository teaches concepts across three connected stages:
+The repository teaches concepts across four connected stages:
 
 1. `rustlings-core` develops practical Rust fluency through small test-driven
    exercises.
@@ -16,6 +16,10 @@ The repository teaches concepts across three connected stages:
    economic modeling, oracle integration, MEV resistance, cross-program
    security, governance, deployment operations, security review methodology,
    fuzz testing, zero-knowledge proofs, and optimization.
+4. `systems-core` covers the off-chain and validator side — concurrency,
+   message passing, durability, failure handling, consensus, Solana validator
+   internals, and async Rust with tokio — taking a learner from junior to
+   senior protocol engineer.
 
 The goal is not to memorize framework syntax. It is to understand what the
 code does, why the Solana runtime requires each check, why a protocol's
@@ -101,6 +105,30 @@ Topics include:
 - optimization: account layout, zero-copy deserialization, compute unit
   profiling, and instruction batching.
 
+### Systems Core
+
+[`systems-core`](systems-core/README.md) is the track for everything outside
+the program: the threads, queues, disks, networks and consensus rules that
+production Solana infrastructure is built from. It has a junior → mid → senior
+→ staff roadmap, a [function-signature blueprint](systems-core/SIGNATURES.md)
+(what to use when, and what not to), 24 exercises in the same `todo!()` +
+README + test format, and six [capstones](systems-core/CAPSTONES.md).
+
+Topics include:
+
+- scoped and owned threads, `Send`/`Sync`/`'static`, panic handling;
+- lock ordering, atomics and memory ordering, snapshot swapping;
+- bounded pipelines, actors with one-shot replies, graceful shutdown;
+- write-ahead logs, crash recovery, group commit, replay protection;
+- logical clocks, failure detection, retries with backoff and budgets;
+- BFT stake quorums, Raft leader election, heaviest-subtree fork choice;
+- Sealevel-style account-lock scheduling, leader schedules, Turbine fanout,
+  gossip CRDTs, and Proof of History verification;
+- tokio actors and bounded concurrent fan-out.
+
+It includes `strand`, a lab crate that rebuilds `Arc`, `Mutex`, channels,
+`select!` and a tiny async executor from atomics, with runnable examples.
+
 ## How the three tracks connect
 
 | Rust / Anchor skill          | Junior application (Anchor Core)                    | Production application (Protocol Core)                  |
@@ -151,6 +179,15 @@ Move to Protocol Core only after Anchor Core is fully passing:
 ```
 cd ../protocol-core
 cargo test -p ex01-fixed-point-basics
+```
+
+Start Systems Core once Rustlings Core is passing. It can run in parallel
+with Anchor Core and Protocol Core (its README has a 16-week plan that
+interleaves them):
+
+```
+cd ../systems-core
+cargo test -p ex01-scoped-parallel-sum
 ```
 
 Run an entire track only after its unfinished exercises have been completed:
