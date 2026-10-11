@@ -1,0 +1,29 @@
+[workspace]
+members = [
+    "modules/module-1-threads-ownership/exercises/ex01-scoped-parallel-sum",
+    "modules/module-1-threads-ownership/exercises/ex02-join-and-panics",
+    "modules/module-2-shared-state/exercises/ex03-ledger-lock-ordering",
+    "modules/module-2-shared-state/exercises/ex04-atomics-and-publication",
+    "modules/module-2-shared-state/exercises/ex05-epoch-snapshot",
+    "modules/module-3-message-passing/exercises/ex06-bounded-pipeline",
+    "modules/module-3-message-passing/exercises/ex07-actor-oneshot",
+    "modules/module-3-message-passing/exercises/ex08-shutdown-loop",
+    "modules/module-4-durability-batching/exercises/ex09-wal-framing",
+    "modules/module-4-durability-batching/exercises/ex10-group-commit",
+    "modules/module-4-durability-batching/exercises/ex11-replay-protection",
+    "modules/module-5-time-ordering-failure/exercises/ex12-logical-clocks",
+    "modules/module-5-time-ordering-failure/exercises/ex13-failure-detector",
+    "modules/module-5-time-ordering-failure/exercises/ex14-retry-backoff",
+    "modules/module-6-consensus/exercises/ex15-stake-quorum",
+    "modules/module-6-consensus/exercises/ex16-raft-election",
+    "modules/module-6-consensus/exercises/ex17-fork-choice",
+    "modules/module-7-validator-internals/exercises/ex18-account-lock-scheduler",
+    "modules/module-7-validator-internals/exercises/ex19-leader-schedule",
+    "modules/module-7-validator-internals/exercises/ex20-turbine-tree",
+    "modules/module-7-validator-internals/exercises/ex21-gossip-crdt",
+    "modules/module-7-validator-internals/exercises/ex22-poh-verify",
+    "modules/module-8-async-tokio/exercises/ex23-tokio-actor",
+    "modules/module-8-async-tokio/exercises/ex24-bounded-fanout",
+]
+exclude = ["strand"]
+resolver = "2"
